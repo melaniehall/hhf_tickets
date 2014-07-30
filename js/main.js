@@ -53,7 +53,7 @@
 
     var otherContributionAmount = calculateOtherContribution();
 
-    var url = "http://hhf.kindful.com/widget?campaign_id=1051&schedule=0&success_url=http%3A//hannehowardfund.org/&cart[desc]=Sunset"
+    var url = "http://hhf.kindful.com/widget?campaign_id=4366&schedule=0&success_url=http%3A//hannehowardfund.org/&cart[desc]=Sunset"
     url += " Salutations for Africa";
     if ($quantity > 0){
       items ++;
