@@ -53,7 +53,7 @@
 
     var otherContributionAmount = calculateOtherContribution();
 
-    var url = "http://sacenter.lvh.me:3000/widget?campaign_id=4293&schedule=0&success_url=http%3A//hannehowardfund.org/&cart[desc]=Sunset"
+    var url = "http://hhf.lvh.me:3000/widget?campaign_id=4364&schedule=0&success_url=http%3A//hannehowardfund.org/&cart[desc]=Sunset"
     url += " Salutations for Africa";
     if ($quantity > 0){
       items ++;
