@@ -8,7 +8,7 @@
     $(document).foundation();
     $("#submit").click(buildUrl);
     $("#submit").click(calculateTotal);
-    $("input, select").change(calculateTotal);
+    $("input").change(calculateTotal);
     $("#registration").change(setDefaultRegistrationValue);
   }
 
@@ -18,52 +18,19 @@
   }
 
   function calculateRegistration(){
-    var rate = 175;
+    var rate = 20;
     var total = 0;
-    var quantity = $("#registration").find(":selected").val();
+    var quantity = findQuantity();
 
     total = rate * quantity;
 
     return total;
   }
 
-  function calculateSponsorship(){
-    var sponsorshipAmount = 0;
-    var $sponsorshipLevel = $("#sponsorship").find(":selected").val();
-    switch ($sponsorshipLevel) {
-      case "platinum_level":
-        sponsorshipAmount = 1000;
-        break;
-      case "gold_level":
-        sponsorshipAmount = 500;
-        break;
-      case "silver_level":
-        sponsorshipAmount = 250;
-        break;
-      default:
-        sponsorshipAmount = 0;
-      }
-      return sponsorshipAmount;
-    }
-
-  function selectSponsorship(){
-    var sponsorshipType = "";
-    var $sponsorshipLevel = $("#sponsorship").find(":selected").val();
-    switch ($sponsorshipLevel) {
-      case "platinum_level":
-        sponsorshipType = "Platinum Plan";
-        break;
-      case "gold_level":
-        sponsorshipType = "Gold Plan";
-        break;
-      case "silver_level":
-        sponsorshipType = "Silver Plan";
-        break;
-      default:
-        sponsorshipType = "";
-      }
-      return sponsorshipType;
-    }
+  function findQuantity(){
+    var quantity = parseInt($("#quantity").val());
+    return (isNaN(quantity)) ? 0 : quantity;
+  }
 
   function calculateOtherContribution(){
     var otherContribution = 0;
@@ -74,46 +41,32 @@
 
   function calculateTotal(){
     var registrationTotal = calculateRegistration();
-    var sponsorshipTotal = calculateSponsorship();
     var otherContributionTotal = calculateOtherContribution();
-    var total = registrationTotal + sponsorshipTotal + otherContributionTotal;
+    var total = registrationTotal + otherContributionTotal;
     $("#total").text(total);
   }
 
   function buildUrl(){
     var items = 0;
-    var registrationAmount = 175;
-    var $registrationType = $("#registration").find(":selected").text();
-    var $registrationId = $("#registration").find(":selected").data('product-id');
-    var $quantity = $("#registration").find(":selected").val();
-
-    var sponsorshipAmount = calculateSponsorship();
-    var sponsorshipType = selectSponsorship();
-    var $sponsorshipId = $("#sponsorship").find(":selected").val();
+    var registrationAmount = 20;
+    var $quantity = findQuantity();
 
     var otherContributionAmount = calculateOtherContribution();
 
-    var url = "http://sacenter.lvh.me:3000/widget?campaign_id=4293&schedule=0&success_url=http%3A//www.sacenter.org//&cart[desc]=Mad"
-    url += " Hatter 2014";
+    var url = "http://sacenter.lvh.me:3000/widget?campaign_id=4293&schedule=0&success_url=http%3A//hannehowardfund.org/&cart[desc]=Sunset"
+    url += " Salutations for Africa";
     if ($quantity > 0){
       items ++;
       url += "&cart[items]["+items+"][amount]="+registrationAmount;
-      url += "&cart[items]["+items+"][desc]=Mad Hatter Ticket"
-      url += "&cart[items]["+items+"][product_id]=mad_hatter_ticket"
+      url += "&cart[items]["+items+"][desc]=Sunset Salutations for Africa Ticket"
+      url += "&cart[items]["+items+"][product_id]=sunset_salutations_for_africa_ticket"
       url += "&cart[items]["+items+"][quantity]="+$quantity;
-    }
-    if (sponsorshipType !== ""){
-      items ++
-      url += "&cart[items]["+items+"][amount]="+sponsorshipAmount;
-      url += "&cart[items]["+items+"][desc]="+sponsorshipType;
-      url += "&cart[items]["+items+"][product_id]="+$sponsorshipId;
-      url += "&cart[items]["+items+"][quantity]=1";
     }
     if (otherContributionAmount > 0){
       items ++
       url += "&cart[items]["+items+"][amount]="+otherContributionAmount;
-      url += "&cart[items]["+items+"][desc]=General Donation";
-      url += "&cart[items]["+items+"][product_id]=general_donation";
+      url += "&cart[items]["+items+"][desc]=Additional Donation";
+      url += "&cart[items]["+items+"][product_id]=additional_donation";
       url += "&cart[items]["+items+"][quantity]=1";
     }
     if (items > 0){
